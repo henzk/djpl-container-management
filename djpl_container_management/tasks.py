@@ -18,15 +18,11 @@ def get_cookiecutter_template_dir(template_name):
 
 def get_location(doi):
     parts = doi.split(':')
-    if len(parts) == 1:
-        container_name, product_name = parts[0], None
-    elif len(parts) == 2:
+    if len(parts) == 2:
         container_name, product_name = parts[0], parts[1]
+        return (container_name, product_name)
     else:
-        print 'unable to parse context - format: <container_name>:<product_name>'
-        sys.exit(1)
-
-    return (container_name, product_name)
+        raise Exception('unable to parse context - format: <container_name>:<product_name>')
 
 
 @tasks.register
