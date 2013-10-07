@@ -1,0 +1,7 @@
+include README.rst
+include LICENSE
+include MANIFEST.in
+include requirements.txt
+recursive-include djpl_container_management/cookiecutters/cookiecutter_container *
+recursive-include djpl_container_management/cookiecutters/cookiecutter_feature *
+recursive-include djpl_container_management/cookiecutters/cookiecutter_product *
