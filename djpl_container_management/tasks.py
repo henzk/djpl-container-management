@@ -6,14 +6,14 @@ import sys
 
 def get_cookiecutter_template_dir(template_name):
     import djpl_container_management
-    if not template_name.startswith('cookiecutter'):
-        print 'ERRROR: template names must start with "cookiecutter"'
-        return
-
-    return '%s/cookiecutters/%s' % (
+    tpl_dir = '%s/cookiecutter_templates/%s' % (
         os.path.dirname(djpl_container_management.__file__),
         template_name
     )
+    if os.path.isdir(tpl_dir):
+        return tpl_dir
+    else
+        raise Exception('cookiecutter template not found: ' + tpl_dir)
 
 
 def get_location(doi):
@@ -38,7 +38,7 @@ def create_product(poi):
     container_name, product_name = get_location(poi)
     from cookiecutter.generate import generate_files
     import uuid
-    template_dir = get_cookiecutter_template_dir('cookiecutter_product')
+    template_dir = get_cookiecutter_template_dir('djpl_product')
     webapps = os.environ['APE_ROOT_DIR']
     container_dir = '%s/%s' % (webapps, container_name)
 
@@ -76,7 +76,7 @@ def create_container(container_name):
     Create a container <container_name>.
     '''
     from cookiecutter.generate import generate_files
-    template_dir = get_cookiecutter_template_dir('cookiecutter_container')
+    template_dir = get_cookiecutter_template_dir('djpl_container')
     webapps = os.environ['APE_ROOT_DIR']
     container_dir = '%s/%s' % (webapps, container_name)
 
@@ -122,7 +122,7 @@ def create_feature(feature_name, container_name=None, location=None):
 
     from cookiecutter.generate import generate_files
     from django_productline.context import PRODUCT_CONTEXT
-    template_dir = get_cookiecutter_template_dir('cookiecutter_feature')
+    template_dir = get_cookiecutter_template_dir('djpl_feature')
 
     feature_dir = os.path.join(location, feature_name)
     if os.path.isdir(feature_dir):
