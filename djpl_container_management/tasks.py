@@ -12,7 +12,7 @@ def get_cookiecutter_template_dir(template_name):
     )
     if os.path.isdir(tpl_dir):
         return tpl_dir
-    else
+    else:
         raise Exception('cookiecutter template not found: ' + tpl_dir)
 
 
