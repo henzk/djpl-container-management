@@ -3,7 +3,7 @@ import os
 import json
 import sys
 
-
+@tasks.register_helper
 def get_cookiecutter_template_dir(template_name):
     import djpl_container_management
     tpl_dir = '%s/cookiecutter_templates/%s' % (
@@ -34,7 +34,7 @@ def create_product(poi):
     container_name, product_name = get_location(poi)
     from cookiecutter.generate import generate_files
     import uuid
-    template_dir = get_cookiecutter_template_dir('djpl_product')
+    template_dir = tasks.get_cookiecutter_template_dir('djpl_product')
     webapps = os.environ['APE_ROOT_DIR']
     container_dir = '%s/%s' % (webapps, container_name)
 
