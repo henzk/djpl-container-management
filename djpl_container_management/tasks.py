@@ -72,7 +72,7 @@ def create_container(container_name):
     Create a container <container_name>.
     '''
     from cookiecutter.generate import generate_files
-    template_dir = get_cookiecutter_template_dir('djpl_container')
+    template_dir = tasks.get_cookiecutter_template_dir('djpl_container')
     webapps = os.environ['APE_ROOT_DIR']
     container_dir = '%s/%s' % (webapps, container_name)
 
@@ -118,7 +118,7 @@ def create_feature(feature_name, container_name=None, location=None):
 
     from cookiecutter.generate import generate_files
     from django_productline.context import PRODUCT_CONTEXT
-    template_dir = get_cookiecutter_template_dir('djpl_feature')
+    template_dir = tasks.get_cookiecutter_template_dir('djpl_feature')
 
     feature_dir = os.path.join(location, feature_name)
     if os.path.isdir(feature_dir):
