@@ -5,6 +5,7 @@
 _lib/
 httpd/
 __data__/
+context.json
 
 # C extensions
 *.so
