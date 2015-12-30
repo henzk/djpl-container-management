@@ -183,4 +183,4 @@ def create_project_from(poi, exclude=''):
         else:
             print('ERROR: Directory not copied. Error: %s' % e)
             return
-    print 'done - now start with ape install_cotainer %s' %  target_container
+    print 'done - now start with ape install_container %s' %  target_container
