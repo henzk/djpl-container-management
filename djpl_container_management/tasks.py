@@ -1,3 +1,4 @@
+from __future__ import print_function
 from ape import tasks
 import os
 import json
@@ -40,17 +41,17 @@ def create_product(poi):
     container_dir = '%s/%s' % (webapps, container_name)
 
     if not os.path.isdir(container_dir):
-        print 'ERROR: %s is not a valid container as it does not exist.' % container_dir
+        print('ERROR: %s is not a valid container as it does not exist.' % container_dir)
         return
 
     products_dir = container_dir + '/products'
     if not os.path.isdir(products_dir):
-        print 'ERROR: %s must contain a "products" directory.' % container_dir
+        print('ERROR: %s must contain a "products" directory.' % container_dir)
         return
 
     product_dir = products_dir + '/' + product_name
     if os.path.isdir(product_dir):
-        print 'ERROR: the product "%s:%s" already exists. Choose another product name or delete this product and try again.' % (container_name, product_name)
+        print('ERROR: the product "%s:%s" already exists. Choose another product name or delete this product and try again.' % (container_name, product_name))
         return
 
     generate_files(
@@ -64,7 +65,7 @@ def create_product(poi):
         ),
         output_dir=products_dir
     )
-    print '*** Created product %s:%s' % (container_name, product_name)
+    print('*** Created product %s:%s' % (container_name, product_name))
 
 
 @tasks.register
@@ -78,7 +79,7 @@ def create_container(container_name):
     container_dir = '%s/%s' % (webapps, container_name)
 
     if os.path.isdir(container_dir):
-        print 'ERROR: %s already exists.' % container_dir
+        print('ERROR: %s already exists.' % container_dir)
         return
 
     generate_files(
@@ -90,7 +91,7 @@ def create_container(container_name):
         ),
         output_dir=webapps
     )
-    print '*** Created container %s' % (container_name)
+    print('*** Created container %s' % (container_name))
 
 
 @tasks.register
@@ -106,7 +107,7 @@ def create_feature(feature_name, container_name=None, location=None):
     '''
 
     if location and container_name:
-        print 'ERROR: combining container_name and location options is not supported.'
+        print('ERROR: combining container_name and location options is not supported.')
         sys.exit(1)
 
     if not location and not container_name:
@@ -123,7 +124,7 @@ def create_feature(feature_name, container_name=None, location=None):
 
     feature_dir = os.path.join(location, feature_name)
     if os.path.isdir(feature_dir):
-        print 'ERROR: %s already exists.' % feature_dir
+        print('ERROR: %s already exists.' % feature_dir)
         return
 
     generate_files(
@@ -135,7 +136,7 @@ def create_feature(feature_name, container_name=None, location=None):
         ),
         output_dir=location
     )
-    print '*** Created feature %s in %s' % (feature_name, location)
+    print('*** Created feature %s in %s' % (feature_name, location))
 
 
 def get_containers_location(poi):
@@ -149,7 +150,7 @@ def get_containers_location(poi):
 @tasks.register
 def create_project_from(poi, exclude=''):
     '''
-    This task copy a whole container except for _lib in container root, context.json and __data__ in all products and additionally excludes.
+    This task copies a whole container except for _lib in container root, context.json and __data__ in all products and additional excludes.
     The argument <poi> is in the form source_container:target_container
     The optional argument <exclude> is in the form a,b,c - seperate exclude files and dirs with ,
     '''
@@ -159,22 +160,22 @@ def create_project_from(poi, exclude=''):
     source_container_dir = '%s/%s' % (apedir, source_container)
     target_container_dir = '%s/%s' % (apedir, target_container)
     if not os.path.isdir(source_container_dir):
-        print 'ERROR: %s is not a valid container as it does not exist.' % source_container_dir
+        print('ERROR: %s is not a valid container as it does not exist.' % source_container_dir)
         return
 
     products_dir = source_container_dir + '/products'
     if not os.path.isdir(products_dir):
-        print 'ERROR: %s must contain a "products" directory.' % source_container_dir
+        print('ERROR: %s must contain a "products" directory.' % source_container_dir)
         return
 
     if os.path.isdir(target_container_dir):
-        print 'ERROR: Target Container %s already exist' % target_container_dir
+        print('ERROR: Target Container %s already exist' % target_container_dir)
         return
 
 
     exclude_list = ['_lib', '__data__', 'context.json', 'httpd'] + exclude.split(',')
 
-    print 'copy from %s to %s ..... ' % (source_container_dir, target_container_dir)
+    print('copy from %s to %s ..... ' % (source_container_dir, target_container_dir))
     try:
         shutil.copytree(source_container_dir, target_container_dir, ignore=shutil.ignore_patterns(*exclude_list))
     except OSError as e:
@@ -183,4 +184,4 @@ def create_project_from(poi, exclude=''):
         else:
             print('ERROR: Directory not copied. Error: %s' % e)
             return
-    print 'done - now start with ape install_container %s' %  target_container
+    print('done - now start with ape install_container %s' %  target_container)
