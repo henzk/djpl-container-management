@@ -34,6 +34,6 @@ setup(
     ],
     install_requires=[
         'ape>=0.2.0',
-        #'cookiecutter' FIXME add this when cookiecutter 0.6.5 is out
+        'cookiecutter',
     ],
 )
